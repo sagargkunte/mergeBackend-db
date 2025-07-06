@@ -6,8 +6,8 @@ const db = await mysql.createConnection({
     host:"localhost",
     user:"root",
     password:"sagar",
-    database:"mysql_db"
-})
+    database:"mysql_db" //? Data base name which we have to connect with backend
+});
 console.log("My sql connected Successfully");
 
 //? 2: we need to create a database
@@ -55,12 +55,12 @@ console.log("My sql connected Successfully");
 // await db.query(`INSERT INTO users(username,email) VALUES ?`,[values]); //! dont user parenthesis {VALUES(?)✖  VALUES ? ✔} also use db.query not db.execute
 //! READ
 
-// const [rows] = await db.execute(`
-//     SELECT * FROM users
-// `);
 const [rows] = await db.execute(`
-    SELECT * FROM users WHERE username="emma"
+    SELECT * FROM users
 `);
+// const [rows] = await db.execute(`
+//     SELECT * FROM users WHERE username="emma"
+// `);
 console.log(rows);
 
 // output : [
@@ -73,3 +73,48 @@ console.log(rows);
 // ]
 
 //! UPDATE
+//* Not Recommented
+// try {
+//     const [row] = await db.execute(`
+//         UPDATE users 
+//         SET username="vinodThapa"
+//         WHERE username="vinod"
+//     `);
+//     console.log(row);
+// } catch(err) {
+//     console.log(err);
+// }
+//* Highly Recommented 
+// try {
+//     const [row] = await db.execute(`
+//         UPDATE users 
+//         SET username= ?
+//         WHERE username= ?
+//     `,["vinodThapa","vinod"]);
+//     console.log(row);
+// } catch(err) {
+//     console.log(err);
+// }
+
+//! DELETE
+//* Not Recommented
+// try {
+//     const [row] = await db.execute(`
+//         DELETE FROM users
+//         WHERE email="kiran@gmail.com"
+//     `)
+//     console.log(row);
+// } catch(err) {
+//     console.log(err);
+// }
+
+//* Highly Recommented
+// try {
+//     const [row] = await db.execute(`
+//         DELETE FROM users
+//         WHERE email= ?
+//     `,["kiran@gmail.com"]);
+//     console.log(row);
+// } catch(err) {
+//     console.log(err);
+// }
